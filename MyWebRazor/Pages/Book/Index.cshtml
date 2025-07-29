@@ -1,0 +1,53 @@
+﻿@page
+@model MyWebRazor.Pages.Book.IndexModel
+@{
+	ViewData["Title"] = "Book Index";
+}
+
+<a asp-page="Create" class="btn btn-primary" mb-2>Create New Book</a>
+
+
+<div class="Card Shadow">
+	<div class="card-header">
+		<h3>@ViewData["Title"]</h3>
+	</div>
+
+	<div class="card-body">
+		<table class="table table-stripped table-hover table-responsive">
+			<thead>
+				<tr>
+					<th>@Html.DisplayNameFor(model=>model.Books[0].id)</th>
+					<th>@Html.DisplayNameFor(model => model.Books[0].BookTitle)</th>
+					<th>@Html.DisplayNameFor(model => model.Books[0].BookDescription)</th>
+					<th>@Html.DisplayNameFor(model => model.Books[0].Author)</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				@if(Model.Books != null && Model.Books.Any())
+				{
+					@foreach(var book in Model.Books)
+					{
+						<tr>
+							<td>@Html.DisplayFor(model => book.id)</td>
+							<td>@Html.DisplayFor(model=> book.BookTitle)</td>
+							<td>@Html.DisplayFor(model => book.BookDescription)</td>
+							<td>@Html.DisplayFor(model => book.Author)</td>
+							<td>
+								<a asp-page="Edit" asp-route-id="@book.id" class="btn btn-warning">Edit</a>
+								<a asp-page="Delete" asp-route-id="@book.id" class="btn btn-danger">Delete</a>
+							</td>
+						</tr>
+					}
+				}
+				else{
+					<tr>
+						<td colspan="5" class="text-center">
+							No Books Available At This Moment.
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+</div>
