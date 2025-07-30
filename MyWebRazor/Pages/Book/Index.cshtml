@@ -2,6 +2,7 @@
 @model MyWebRazor.Pages.Book.IndexModel
 @{
 	ViewData["Title"] = "Book Index";
+	var index = 1;
 }
 
 <a asp-page="Create" class="btn btn-primary" mb-2>Create New Book</a>
@@ -16,7 +17,7 @@
 		<table class="table table-stripped table-hover table-responsive">
 			<thead>
 				<tr>
-					<th>@Html.DisplayNameFor(model=>model.Books[0].id)</th>
+					<th>No</th>
 					<th>@Html.DisplayNameFor(model => model.Books[0].BookTitle)</th>
 					<th>@Html.DisplayNameFor(model => model.Books[0].BookDescription)</th>
 					<th>@Html.DisplayNameFor(model => model.Books[0].Author)</th>
@@ -29,18 +30,20 @@
 					@foreach(var book in Model.Books)
 					{
 						<tr>
-							<td>@Html.DisplayFor(model => book.id)</td>
+							<td>@index</td>
 							<td>@Html.DisplayFor(model=> book.BookTitle)</td>
 							<td>@Html.DisplayFor(model => book.BookDescription)</td>
 							<td>@Html.DisplayFor(model => book.Author)</td>
 							<td>
 								<a asp-page="Edit" asp-route-id="@book.id" class="btn btn-warning">Edit</a>
 								<form method="post" asp-page-handler="Delete" asp-route-id="@book.id"
-								onsubmit="return confirm('Are You Sure  You Want To Delete This Book?')">
+								onsubmit="return confirm('Are You Sure  You Want To Delete This Book?')" style="display:inline">
 									<button type="submit" class="btn btn-danger">Delete</button>
 								</form>
 							</td>
 						</tr>
+
+						index++;
 					}
 				}
 				else{

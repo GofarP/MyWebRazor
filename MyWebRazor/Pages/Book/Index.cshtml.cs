@@ -18,7 +18,7 @@ namespace MyWebRazor.Pages.Book
         public IList<Books> Books { get; set; }
         public async Task OnGet()
         {
-            Books = await _context.Books.ToListAsync();
+            Books = await _context.Books.OrderByDescending(b=>b.id).ToListAsync();
         }
 
         public async Task<IActionResult> OnPostDeleteAsync(int? id)
