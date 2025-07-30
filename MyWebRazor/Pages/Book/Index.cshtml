@@ -35,7 +35,10 @@
 							<td>@Html.DisplayFor(model => book.Author)</td>
 							<td>
 								<a asp-page="Edit" asp-route-id="@book.id" class="btn btn-warning">Edit</a>
-								<a asp-page="Delete" asp-route-id="@book.id" class="btn btn-danger">Delete</a>
+								<form method="post" asp-page-handler="Delete" asp-route-id="@book.id"
+								onsubmit="return confirm('Are You Sure  You Want To Delete This Book?')">
+									<button type="submit" class="btn btn-danger">Delete</button>
+								</form>
 							</td>
 						</tr>
 					}

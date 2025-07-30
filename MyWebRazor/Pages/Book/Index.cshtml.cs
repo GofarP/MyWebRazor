@@ -20,5 +20,24 @@ namespace MyWebRazor.Pages.Book
         {
             Books = await _context.Books.ToListAsync();
         }
+
+        public async Task<IActionResult> OnPostDeleteAsync(int? id)
+        {
+			if (id == null)
+            {
+				return NotFound();
+			}
+
+			var book = await _context.Books.FindAsync(id);
+			if (book == null)
+            {
+				return NotFound();
+			}
+
+			_context.Books.Remove(book);
+			await _context.SaveChangesAsync();
+
+			return RedirectToPage("./Index");
+		}
     }
 }
