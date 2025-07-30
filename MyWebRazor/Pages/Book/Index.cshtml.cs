@@ -15,13 +15,25 @@ namespace MyWebRazor.Pages.Book
             _context = context;
         }
 
-        public IList<Books> Books { get; set; }
-        public async Task OnGet()
-        {
-            Books = await _context.Books.OrderByDescending(b=>b.id).ToListAsync();
-        }
+        public IList<Books> Books { get; set; } = new List<Books>();
 
-        public async Task<IActionResult> OnPostDeleteAsync(int? id)
+		[BindProperty(SupportsGet = true)]
+		public string SearchTerm { get; set; } = string.Empty;
+
+		public async Task OnGet()
+        {
+			var query = _context.Books.AsQueryable();
+			if (!string.IsNullOrEmpty(SearchTerm))
+			{
+				query = query.Where(b => b.BookTitle.Contains(SearchTerm));
+			}
+
+			Books = await query.ToListAsync();
+
+
+		}
+
+		public async Task<IActionResult> OnPostDeleteAsync(int? id)
         {
 			if (id == null)
             {
