@@ -14,9 +14,8 @@
 	</div>
 
 	<div class="card-body">
-		<form method="get">
-			<input type="text" name="SearchTerm" value="@Model.SearchTerm" placeholder="Cari Judul Buku..." class="form-control" />
-			<button type="submit" class="btn btn-primary mt-2">Cari</button>
+		<form id="searchForm" method="get">
+			<input id="searchBox" type="text" name="SearchTerm" value="@Model.SearchTerm" placeholder="Cari Judul Buku..." class="form-control" />
 		</form>
 		<table class="table table-stripped table-hover table-responsive">
 			<thead>
@@ -61,3 +60,30 @@
 		</table>
 	</div>
 </div>
+
+<script>
+	let timer;
+	const input = document.getElementById("searchBox");
+
+	input.focus();
+
+	input.addEventListener("input", function () {
+		clearTimeout(timer);
+		timer = setTimeout(() => {
+			const searchTerm = input.value;
+
+			fetch(`/Book/Index?SearchTerm=${encodeURIComponent(searchTerm)}`)
+				.then(response => response.text())
+				.then(html => {
+					// Replace only the table or content part
+					const parser = new DOMParser();
+					const doc = parser.parseFromString(html, 'text/html');
+					const newTable = doc.querySelector('table');
+					const oldTable = document.querySelector('table');
+					if (newTable && oldTable) {
+						oldTable.replaceWith(newTable);
+					}
+				});
+		}, 500);
+	});
+</script>
