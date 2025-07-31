@@ -11,6 +11,7 @@ namespace MyWebRazor.DAL
         }
 
         public DbSet<Books> Books { get; set; }
-
-    }
+		public DbSet<Employee> Employees { get; set; }
+		public DbSet<Department> Departments { get; set; }
+	}
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyWebRazor.DAL;
 
@@ -11,9 +12,11 @@ using MyWebRazor.DAL;
 namespace MyWebRazor.Migrations
 {
     [DbContext(typeof(MyAppDBContext))]
-    partial class MyAppDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250731223733_CreateEmployeeAndDepartment")]
+    partial class CreateEmployeeAndDepartment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
